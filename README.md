@@ -1,6 +1,14 @@
 # INES-Ruhengeri ERP System
 
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)](https://github.com/Aimecol/erp_dapp)
+[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/download)
+[![WPF](https://img.shields.io/badge/WPF-Windows-lightblue.svg)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
+[![SQLite](https://img.shields.io/badge/Database-SQLite-green.svg)](https://www.sqlite.org/)
+[![Material Design](https://img.shields.io/badge/UI-Material%20Design-orange.svg)](http://materialdesigninxaml.net/)
+
 A comprehensive, production-ready Enterprise Resource Planning (ERP) system built with C# WPF, designed specifically for educational institutions with a focus on accounting and business management.
+
+> 🎉 **Status**: Fully functional and ready for production use! The application has been successfully tested and deployed.
 
 ## 🏫 About INES-Ruhengeri
 
@@ -35,7 +43,7 @@ This ERP system is designed for the Institut d'Enseignement Supérieur de Ruheng
 - **Framework**: .NET 8.0
 - **UI Framework**: WPF (Windows Presentation Foundation)
 - **Architecture**: MVVM (Model-View-ViewModel)
-- **Database**: SQL Server / PostgreSQL
+- **Database**: SQLite (Production ready, zero-config)
 - **ORM**: Entity Framework Core 8.0
 - **UI Library**: Material Design in XAML
 - **Charts**: LiveCharts2
@@ -49,15 +57,15 @@ This ERP system is designed for the Institut d'Enseignement Supérieur de Ruheng
 ### Prerequisites
 - Visual Studio 2022 or later
 - .NET 8.0 SDK
-- SQL Server 2019+ or PostgreSQL 12+
 - Windows 10/11
+- No database server required (uses SQLite)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-org/ines-erp-system.git
-   cd ines-erp-system
+   git clone https://github.com/Aimecol/erp_dapp.git
+   cd erp_dapp
    ```
 
 2. **Restore NuGet packages**
@@ -65,21 +73,12 @@ This ERP system is designed for the Institut d'Enseignement Supérieur de Ruheng
    dotnet restore
    ```
 
-3. **Configure database connection**
-   - Update `appsettings.json` with your database connection string
-   - For SQL Server (default):
-     ```json
-     "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=INES_ERP;Trusted_Connection=true;MultipleActiveResultSets=true"
-     }
-     ```
+3. **Database setup (automatic)**
+   - The application uses SQLite database (no configuration needed)
+   - Database file: `ines_erp.db` (created automatically)
+   - Default admin user is seeded automatically
 
-4. **Run database migrations**
-   ```bash
-   dotnet ef database update --project src/INES.ERP.Data
-   ```
-
-5. **Build and run**
+4. **Build and run**
    ```bash
    dotnet build
    dotnet run --project src/INES.ERP.WPF
@@ -126,16 +125,21 @@ INES.ERP/
 ## 🔧 Configuration
 
 ### Database Configuration
-The application supports both SQL Server and PostgreSQL. Configure your preferred database in `appsettings.json`:
+The application uses SQLite database with zero configuration required:
 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=INES_ERP;Trusted_Connection=true;",
-    "PostgreSQL": "Host=localhost;Database=ines_erp;Username=postgres;Password=password"
+    "DefaultConnection": "Data Source=ines_erp.db"
   }
 }
 ```
+
+**Benefits of SQLite:**
+- No database server installation required
+- Single file database (portable)
+- ACID compliant and reliable
+- Perfect for institutional deployments
 
 ### Application Settings
 Key configuration options in `appsettings.json`:
@@ -201,9 +205,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🆘 Support
 
 For support and questions:
-- Email: support@ines.ac.rw
-- Documentation: [Wiki](https://github.com/your-org/ines-erp-system/wiki)
-- Issues: [GitHub Issues](https://github.com/your-org/ines-erp-system/issues)
+- **Issues**: [GitHub Issues](https://github.com/Aimecol/erp_dapp/issues)
+- **Documentation**: Check the `docs/` folder in this repository
+- **Email**: Contact the development team through GitHub
 
 ## 🙏 Acknowledgments
 
