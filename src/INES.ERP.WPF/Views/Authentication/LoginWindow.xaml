@@ -1,0 +1,241 @@
+<Window x:Class="INES.ERP.WPF.Views.Authentication.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewModels="clr-namespace:INES.ERP.WPF.ViewModels.Authentication"
+        Title="{Binding Title}"
+        Height="600" Width="900"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+
+
+    <Border Background="{StaticResource BackgroundBrush}" 
+            CornerRadius="{StaticResource MediumCornerRadius}"
+            Effect="{StaticResource LargeShadow}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Branding -->
+            <Border Grid.Column="0" 
+                    Background="{StaticResource PrimaryBrush}"
+                    CornerRadius="8,0,0,8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Logo and Title -->
+                    <StackPanel Grid.Row="1" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center">
+                        
+                        <!-- Logo Placeholder -->
+                        <Ellipse Width="120" Height="120" 
+                                 Fill="White" 
+                                 Margin="{StaticResource LargeMargin}"/>
+                        
+                        <!-- Application Title -->
+                        <TextBlock Text="INES-Ruhengeri"
+                                   FontSize="{StaticResource FontSizeXXLarge}"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Margin="{StaticResource NormalMargin}"/>
+                        
+                        <TextBlock Text="ERP System"
+                                   FontSize="{StaticResource FontSizeLarge}"
+                                   Foreground="White"
+                                   Opacity="0.9"
+                                   HorizontalAlignment="Center"/>
+                        
+                        <TextBlock Text="Accounting &amp; Business Management"
+                                   FontSize="{StaticResource FontSizeNormal}"
+                                   Foreground="White"
+                                   Opacity="0.7"
+                                   HorizontalAlignment="Center"
+                                   Margin="{StaticResource SmallMargin}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Right Panel - Login Form -->
+            <Grid Grid.Column="1" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <Grid Grid.Row="0" Margin="{StaticResource LargePadding}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Welcome Back"
+                                   FontSize="{StaticResource FontSizeXLarge}"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Please sign in to your account"
+                                   FontSize="{StaticResource FontSizeNormal}"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- Close Button -->
+                    <Button Grid.Column="1"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            Command="{Binding ExitCommand}"
+                            ToolTip="Exit Application">
+                        <materialDesign:PackIcon Kind="Close" 
+                                                 Width="20" Height="20"/>
+                    </Button>
+                </Grid>
+
+                <!-- Login Form -->
+                <ScrollViewer Grid.Row="1" 
+                              VerticalScrollBarVisibility="Auto"
+                              Padding="{StaticResource LargePadding}">
+                    <StackPanel>
+
+                        <!-- Error Message -->
+                        <Border Background="{StaticResource ErrorBrush}"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                Padding="{StaticResource MediumPadding}"
+                                Margin="{StaticResource NormalMargin}"
+                                Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock Text="{Binding ErrorMessage}"
+                                       Foreground="White"
+                                       FontWeight="Medium"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+
+                        <!-- Username Field -->
+                        <TextBox materialDesign:HintAssist.Hint="Username or Email"
+                                 materialDesign:HintAssist.IsFloating="True"
+                                 Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="{StaticResource FontSizeNormal}"
+                                 Margin="{StaticResource NormalMargin}">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                                    <Setter Property="materialDesign:TextFieldAssist.HasLeadingIcon" Value="True"/>
+                                    <Setter Property="materialDesign:TextFieldAssist.LeadingIcon" Value="Account"/>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+                        <!-- Password Field -->
+                        <Grid Margin="{StaticResource NormalMargin}">
+                            <PasswordBox x:Name="PasswordBox"
+                                         materialDesign:HintAssist.Hint="Password"
+                                         materialDesign:HintAssist.IsFloating="True"
+                                         FontSize="{StaticResource FontSizeNormal}"
+                                         Visibility="{Binding ShowPassword, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                <PasswordBox.Style>
+                                    <Style TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignOutlinedPasswordBox}">
+                                        <Setter Property="materialDesign:TextFieldAssist.HasLeadingIcon" Value="True"/>
+                                        <Setter Property="materialDesign:TextFieldAssist.LeadingIcon" Value="Lock"/>
+                                        <Setter Property="materialDesign:TextFieldAssist.HasTrailingIcon" Value="True"/>
+                                        <Setter Property="materialDesign:TextFieldAssist.TrailingIcon" Value="Eye"/>
+                                    </Style>
+                                </PasswordBox.Style>
+                            </PasswordBox>
+
+                            <TextBox materialDesign:HintAssist.Hint="Password"
+                                     materialDesign:HintAssist.IsFloating="True"
+                                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="{StaticResource FontSizeNormal}"
+                                     Visibility="{Binding ShowPassword, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                                        <Setter Property="materialDesign:TextFieldAssist.HasLeadingIcon" Value="True"/>
+                                        <Setter Property="materialDesign:TextFieldAssist.LeadingIcon" Value="Lock"/>
+                                        <Setter Property="materialDesign:TextFieldAssist.HasTrailingIcon" Value="True"/>
+                                        <Setter Property="materialDesign:TextFieldAssist.TrailingIcon" Value="EyeOff"/>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+
+                            <!-- Toggle Password Visibility Button -->
+                            <Button HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,8,0"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    Command="{Binding TogglePasswordVisibilityCommand}">
+                                <materialDesign:PackIcon Kind="{Binding ShowPassword, Converter={StaticResource BooleanToIconConverter}, ConverterParameter='Eye|EyeOff'}"
+                                                         Width="20" Height="20"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Remember Me and Forgot Password -->
+                        <Grid Margin="{StaticResource NormalMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox Grid.Column="0"
+                                      Content="Remember me"
+                                      IsChecked="{Binding RememberMe}"
+                                      VerticalAlignment="Center"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Forgot Password?"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Command="{Binding ForgotPasswordCommand}"
+                                    Foreground="{StaticResource PrimaryBrush}"/>
+                        </Grid>
+
+                        <!-- Login Button -->
+                        <Button Command="{Binding LoginCommand}"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Background="{StaticResource PrimaryBrush}"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                FontSize="{StaticResource FontSizeNormal}"
+                                FontWeight="Bold"
+                                Height="48"
+                                Margin="{StaticResource LargeMargin}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <ProgressBar Width="20" Height="20"
+                                                 Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                                 Value="0"
+                                                 IsIndeterminate="True"
+                                                 Foreground="White"
+                                                 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                 Margin="0,0,8,0"/>
+                                    <TextBlock Text="{Binding IsBusy, Converter={StaticResource BooleanToTextConverter}, ConverterParameter='Signing In...|SIGN IN'}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer -->
+                <Border Grid.Row="2" 
+                        BorderBrush="{StaticResource DividerBrush}"
+                        BorderThickness="0,1,0,0"
+                        Padding="{StaticResource MediumPadding}">
+                    <TextBlock Text="© 2024 INES-Ruhengeri. All rights reserved."
+                               FontSize="{StaticResource FontSizeSmall}"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

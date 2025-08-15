@@ -1,0 +1,444 @@
+<UserControl x:Class="INES.ERP.WPF.Views.Dashboard.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:INES.ERP.WPF.ViewModels.Dashboard">
+
+    <UserControl.DataContext>
+        <viewModels:DashboardViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" 
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="{StaticResource LargePadding}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Title and Last Refresh -->
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Dashboard"
+                               Style="{StaticResource HeadingTextStyle}"/>
+                    <TextBlock Text="{Binding LastRefreshTime, StringFormat='Last updated: {0:yyyy-MM-dd HH:mm:ss}'}"
+                               Style="{StaticResource CaptionTextStyle}"/>
+                </StackPanel>
+
+                <!-- Refresh Button -->
+                <Button Grid.Column="1"
+                        Command="{Binding RefreshCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        IsEnabled="{Binding IsNotBusy}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" 
+                                                     Width="16" Height="16" 
+                                                     Margin="0,0,8,0"/>
+                            <TextBlock Text="REFRESH"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="{StaticResource MediumPadding}">
+            <StackPanel>
+
+                <!-- KPI Cards -->
+                <Border Style="{StaticResource StandardCardStyle}">
+                    <StackPanel>
+                        <Grid Margin="{StaticResource MediumMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="Key Performance Indicators"
+                                       Style="{StaticResource SubHeadingTextStyle}"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Refresh KPIs"
+                                    Command="{Binding RefreshKPIsCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}"/>
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding KPIs}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4" Margin="{StaticResource MediumMargin}"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource CompactCardStyle}"
+                                            Background="{StaticResource SurfaceBrush}"
+                                            Margin="{StaticResource SmallMargin}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <!-- KPI Title -->
+                                            <TextBlock Grid.Row="0"
+                                                       Text="{Binding Title}"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="{StaticResource FontSizeNormal}"
+                                                       Margin="{StaticResource SmallMargin}"/>
+
+                                            <!-- KPI Value -->
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{Binding CurrentValue, StringFormat='{}{0:N0}'}"
+                                                       FontSize="{StaticResource FontSizeXLarge}"
+                                                       FontWeight="Bold"
+                                                       Foreground="{StaticResource PrimaryBrush}"
+                                                       Margin="{StaticResource SmallMargin}"/>
+
+                                            <!-- Unit -->
+                                            <TextBlock Grid.Row="2"
+                                                       Text="{Binding Unit}"
+                                                       FontSize="{StaticResource FontSizeSmall}"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                                       Margin="{StaticResource SmallMargin}"/>
+
+                                            <!-- Change Indicator -->
+                                            <StackPanel Grid.Row="3" 
+                                                        Orientation="Horizontal"
+                                                        Margin="{StaticResource SmallMargin}">
+                                                <materialDesign:PackIcon Kind="{Binding IsTrendingUp, Converter={StaticResource BooleanToIconConverter}, ConverterParameter='TrendingUp|TrendingDown'}"
+                                                                         Width="16" Height="16"
+                                                                         Foreground="{Binding IsTrendingUp, Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Green|Red'}"
+                                                                         Margin="0,0,4,0"/>
+                                                <TextBlock Text="{Binding PercentageChange, StringFormat='{}{0:F1}%'}"
+                                                           FontSize="{StaticResource FontSizeSmall}"
+                                                           Foreground="{Binding IsTrendingUp, Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Green|Red'}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- Charts Section -->
+                <Border Style="{StaticResource StandardCardStyle}">
+                    <StackPanel>
+                        <Grid Margin="{StaticResource MediumMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="Analytics Charts"
+                                       Style="{StaticResource SubHeadingTextStyle}"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Refresh Charts"
+                                    Command="{Binding RefreshChartsCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}"/>
+                        </Grid>
+
+                        <!-- Chart Placeholder -->
+                        <Grid Height="400" Margin="{StaticResource MediumMargin}">
+                            <Border Background="{StaticResource BackgroundBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                <StackPanel HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="ChartLine" 
+                                                             Width="64" Height="64"
+                                                             Foreground="{StaticResource TextSecondaryBrush}"
+                                                             Margin="{StaticResource MediumMargin}"/>
+                                    <TextBlock Text="Charts will be displayed here"
+                                               Style="{StaticResource BodyTextStyle}"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Text="LiveCharts2 integration coming soon"
+                                               Style="{StaticResource CaptionTextStyle}"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Summary Cards -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Financial Summary -->
+                    <Border Grid.Column="0" Style="{StaticResource DashboardCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Financial Summary"
+                                       Style="{StaticResource SubHeadingTextStyle}"/>
+                            
+                            <StackPanel Margin="{StaticResource MediumMargin}">
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Total Income"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding FinancialSummary.TotalIncome, StringFormat='{}{0:C0}'}"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+                                
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Total Expenses"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding FinancialSummary.TotalExpenses, StringFormat='{}{0:C0}'}"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+                                
+                                <Separator Style="{StaticResource SeparatorStyle}"/>
+                                
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Net Profit" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding FinancialSummary.NetProfit, StringFormat='{}{0:C0}'}"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource SuccessBrush}"/>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Student Accounts Summary -->
+                    <Border Grid.Column="1" Style="{StaticResource DashboardCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Student Accounts"
+                                       Style="{StaticResource SubHeadingTextStyle}"/>
+                            
+                            <StackPanel Margin="{StaticResource MediumMargin}">
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Active Students"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding StudentAccountsSummary.TotalActiveStudents, StringFormat='{}{0:N0}'}"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+                                
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Collection Rate"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding StudentAccountsSummary.CollectionRate, StringFormat='{}{0:F1}%'}"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+                                
+                                <Separator Style="{StaticResource SeparatorStyle}"/>
+                                
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Outstanding" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding StudentAccountsSummary.OutstandingFees, StringFormat='{}{0:C0}'}"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource WarningBrush}"/>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Inventory Summary -->
+                    <Border Grid.Column="2" Style="{StaticResource DashboardCardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Inventory"
+                                       Style="{StaticResource SubHeadingTextStyle}"/>
+                            
+                            <StackPanel Margin="{StaticResource MediumMargin}">
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Total Items"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding InventorySummary.TotalItems, StringFormat='{}{0:N0}'}"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+                                
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Total Value"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding InventorySummary.TotalValue, StringFormat='{}{0:C0}'}"
+                                               FontWeight="SemiBold"/>
+                                </Grid>
+                                
+                                <Separator Style="{StaticResource SeparatorStyle}"/>
+                                
+                                <Grid Margin="{StaticResource SmallMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Low Stock" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding InventorySummary.ItemsBelowReorderLevel, StringFormat='{}{0:N0}'}"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource ErrorBrush}"/>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Alerts Section -->
+                <Border Style="{StaticResource StandardCardStyle}">
+                    <StackPanel>
+                        <Grid Margin="{StaticResource MediumMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <TextBlock Text="Recent Alerts"
+                                           Style="{StaticResource SubHeadingTextStyle}"/>
+                                <Border Background="{StaticResource ErrorBrush}"
+                                        CornerRadius="10"
+                                        Padding="6,2"
+                                        Margin="8,0,0,0"
+                                        Visibility="{Binding UnreadAlertsCount, Converter={StaticResource IntToVisibilityConverter}}">
+                                    <TextBlock Text="{Binding UnreadAlertsCount}"
+                                               Foreground="White"
+                                               FontSize="{StaticResource FontSizeSmall}"
+                                               FontWeight="Bold"/>
+                                </Border>
+                            </StackPanel>
+
+                            <Button Grid.Column="1"
+                                    Content="Refresh Alerts"
+                                    Command="{Binding RefreshAlertsCommand}"
+                                    Style="{StaticResource MaterialDesignFlatButton}"/>
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Alerts}" MaxHeight="300">
+                            <ItemsControl.Template>
+                                <ControlTemplate>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource SurfaceBrush}"
+                                            BorderBrush="{StaticResource BorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource SmallCornerRadius}"
+                                            Margin="{StaticResource SmallMargin}"
+                                            Padding="{StaticResource MediumPadding}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Alert Icon -->
+                                            <materialDesign:PackIcon Grid.Column="0"
+                                                                     Kind="{Binding Icon}"
+                                                                     Width="24" Height="24"
+                                                                     Foreground="{Binding AlertType, Converter={StaticResource AlertTypeToColorConverter}}"
+                                                                     Margin="0,0,12,0"/>
+
+                                            <!-- Alert Content -->
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Title}"
+                                                           FontWeight="SemiBold"
+                                                           Margin="{StaticResource SmallMargin}"/>
+                                                <TextBlock Text="{Binding Message}"
+                                                           TextWrapping="Wrap"
+                                                           Margin="{StaticResource SmallMargin}"/>
+                                                <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
+                                                           Style="{StaticResource CaptionTextStyle}"
+                                                           Margin="{StaticResource SmallMargin}"/>
+                                            </StackPanel>
+
+                                            <!-- Alert Actions -->
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                <Button Content="Mark Read"
+                                                        Command="{Binding DataContext.MarkAlertAsReadCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding Id}"
+                                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                                        Visibility="{Binding IsRead, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                                <Button Content="Dismiss"
+                                                        Command="{Binding DataContext.DismissAlertCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding Id}"
+                                                        Style="{StaticResource MaterialDesignFlatButton}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Loading Overlay -->
+        <Border Grid.Row="1"
+                Background="#80000000"
+                Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" 
+                        VerticalAlignment="Center">
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Width="50" Height="50"
+                             IsIndeterminate="True"
+                             Foreground="{StaticResource PrimaryBrush}"/>
+                <TextBlock Text="Loading dashboard data..."
+                           Foreground="White"
+                           FontSize="{StaticResource FontSizeNormal}"
+                           Margin="{StaticResource MediumMargin}"/>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

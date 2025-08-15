@@ -1,0 +1,239 @@
+<Window x:Class="INES.ERP.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="INES-Ruhengeri ERP System"
+        Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" 
+                Background="{StaticResource PrimaryBrush}"
+                Height="60">
+            <Grid Margin="{StaticResource MediumPadding}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo and Title -->
+                <StackPanel Grid.Column="0" 
+                            Orientation="Horizontal" 
+                            VerticalAlignment="Center">
+                    <Ellipse Width="40" Height="40" 
+                             Fill="White" 
+                             Margin="0,0,12,0"/>
+                    <TextBlock Text="INES ERP System"
+                               FontSize="{StaticResource FontSizeLarge}"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Search Bar -->
+                <TextBox Grid.Column="1"
+                         materialDesign:HintAssist.Hint="Search..."
+                         materialDesign:HintAssist.IsFloating="False"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Background="White"
+                         MaxWidth="400"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Margin="{StaticResource MediumMargin}"/>
+
+                <!-- User Menu -->
+                <StackPanel Grid.Column="2" 
+                            Orientation="Horizontal" 
+                            VerticalAlignment="Center">
+                    
+                    <!-- Notifications -->
+                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                            Foreground="White"
+                            ToolTip="Notifications">
+                        <materialDesign:PackIcon Kind="Bell" Width="24" Height="24"/>
+                    </Button>
+
+                    <!-- User Profile -->
+                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                            Foreground="White"
+                            ToolTip="User Profile">
+                        <materialDesign:PackIcon Kind="Account" Width="24" Height="24"/>
+                    </Button>
+
+                    <!-- Settings -->
+                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                            Foreground="White"
+                            ToolTip="Settings">
+                        <materialDesign:PackIcon Kind="Cog" Width="24" Height="24"/>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Navigation Menu -->
+            <Border Grid.Column="0" 
+                    Background="{StaticResource SurfaceBrush}"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,0,1,0">
+                
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="{StaticResource NormalPadding}">
+
+                        <!-- Dashboard -->
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Padding="{StaticResource MediumPadding}"
+                                Margin="{StaticResource SmallMargin}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ViewDashboard" 
+                                                             Width="20" Height="20" 
+                                                             Margin="0,0,12,0"/>
+                                    <TextBlock Text="Dashboard"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <!-- Student Accounts -->
+                        <Expander Header="Student Accounts" 
+                                  Style="{StaticResource MaterialDesignExpander}"
+                                  Margin="{StaticResource SmallMargin}">
+                            <StackPanel Margin="20,0,0,0">
+                                <Button Content="Student Billing" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Payment Tracking" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Penalty Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Receipts &amp; Statements" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Project Accounts -->
+                        <Expander Header="Project Accounts" 
+                                  Style="{StaticResource MaterialDesignExpander}"
+                                  Margin="{StaticResource SmallMargin}">
+                            <StackPanel Margin="20,0,0,0">
+                                <Button Content="Project Setup" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Grant Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Milestone Disbursement" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Project Expenses" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Inventory -->
+                        <Expander Header="Stores &amp; Inventory"
+                                  Style="{StaticResource MaterialDesignExpander}"
+                                  Margin="{StaticResource SmallMargin}">
+                            <StackPanel Margin="20,0,0,0">
+                                <Button Content="Goods Receipt/Issue" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Stock Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Stock Valuation" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Reorder Alerts" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Accounting -->
+                        <Expander Header="Accounting" 
+                                  Style="{StaticResource MaterialDesignExpander}"
+                                  Margin="{StaticResource SmallMargin}">
+                            <StackPanel Margin="20,0,0,0">
+                                <Button Content="Chart of Accounts" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Journal Entries" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Trial Balance" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Payables &amp; Receivables" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Payroll -->
+                        <Expander Header="Payroll &amp; HR"
+                                  Style="{StaticResource MaterialDesignExpander}"
+                                  Margin="{StaticResource SmallMargin}">
+                            <StackPanel Margin="20,0,0,0">
+                                <Button Content="Employee Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Payslip Generator" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Leave Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Payroll Reports" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Reports -->
+                        <Expander Header="Reports &amp; Analytics"
+                                  Style="{StaticResource MaterialDesignExpander}"
+                                  Margin="{StaticResource SmallMargin}">
+                            <StackPanel Margin="20,0,0,0">
+                                <Button Content="Financial Reports" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Custom Reports" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Analytics Dashboard" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Audit Trail" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                            </StackPanel>
+                        </Expander>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Content Area -->
+            <Grid Grid.Column="1" Background="{StaticResource BackgroundBrush}">
+                <ContentControl x:Name="MainContentPresenter">
+                    <!-- Default Dashboard Content -->
+                    <Grid>
+                        <TextBlock Text="Welcome to INES-Ruhengeri ERP System"
+                                   FontSize="{StaticResource FontSizeXLarge}"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                    </Grid>
+                </ContentControl>
+            </Grid>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" 
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Height="30">
+            <Grid Margin="{StaticResource NormalPadding}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Ready"
+                           VerticalAlignment="Center"
+                           FontSize="{StaticResource FontSizeSmall}"
+                           Foreground="{StaticResource TextSecondaryBrush}"/>
+
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal">
+                    <TextBlock Text="Connected"
+                               VerticalAlignment="Center"
+                               FontSize="{StaticResource FontSizeSmall}"
+                               Foreground="{StaticResource SuccessBrush}"
+                               Margin="0,0,8,0"/>
+                    <Ellipse Width="8" Height="8" 
+                             Fill="{StaticResource SuccessBrush}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

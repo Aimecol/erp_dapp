@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyTitle>INES ERP Core</AssemblyTitle>
+    <AssemblyDescription>Core domain models and interfaces for INES ERP System</AssemblyDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Authentication\" />
+    <Folder Include="Models\StudentAccounts\" />
+    <Folder Include="Models\ProjectAccounts\" />
+    <Folder Include="Models\Inventory\" />
+    <Folder Include="Models\Accounting\" />
+    <Folder Include="Models\Payroll\" />
+    <Folder Include="Models\FixedAssets\" />
+    <Folder Include="Models\Procurement\" />
+    <Folder Include="Models\Reports\" />
+    <Folder Include="Models\Common\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Validators\" />
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
+</Project>
