@@ -101,11 +101,12 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
                                 Padding="{StaticResource MediumPadding}"
-                                Margin="{StaticResource SmallMargin}">
+                                Margin="{StaticResource SmallMargin}"
+                                Command="{Binding NavigateToDashboardCommand}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="ViewDashboard" 
-                                                             Width="20" Height="20" 
+                                    <materialDesign:PackIcon Kind="ViewDashboard"
+                                                             Width="20" Height="20"
                                                              Margin="0,0,12,0"/>
                                     <TextBlock Text="Dashboard"/>
                                 </StackPanel>
@@ -113,26 +114,58 @@
                         </Button>
 
                         <!-- Student Accounts -->
-                        <Expander Header="Student Accounts" 
+                        <Expander Header="Student Accounts"
                                   Style="{StaticResource MaterialDesignExpander}"
                                   Margin="{StaticResource SmallMargin}">
                             <StackPanel Margin="20,0,0,0">
-                                <Button Content="Student Billing" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Payment Tracking" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Penalty Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Receipts &amp; Statements" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Student Billing"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToStudentBillingCommand}"/>
+                                <Button Content="Payment Tracking"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToPaymentTrackingCommand}"/>
+                                <Button Content="Penalty Management"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToPenaltyManagementCommand}"/>
+                                <Button Content="Receipts &amp; Statements"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToReceiptsStatementsCommand}"/>
                             </StackPanel>
                         </Expander>
 
                         <!-- Project Accounts -->
-                        <Expander Header="Project Accounts" 
+                        <Expander Header="Project Accounts"
                                   Style="{StaticResource MaterialDesignExpander}"
                                   Margin="{StaticResource SmallMargin}">
                             <StackPanel Margin="20,0,0,0">
-                                <Button Content="Project Setup" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Grant Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Milestone Disbursement" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Project Expenses" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Project Setup"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToProjectSetupCommand}"/>
+                                <Button Content="Grant Management"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToGrantManagementCommand}"/>
+                                <Button Content="Milestone Disbursement"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToMilestoneDisbursementCommand}"/>
+                                <Button Content="Project Expenses"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToProjectExpensesCommand}"/>
                             </StackPanel>
                         </Expander>
 
@@ -141,22 +174,54 @@
                                   Style="{StaticResource MaterialDesignExpander}"
                                   Margin="{StaticResource SmallMargin}">
                             <StackPanel Margin="20,0,0,0">
-                                <Button Content="Goods Receipt/Issue" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Stock Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Stock Valuation" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Reorder Alerts" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Goods Receipt/Issue"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToGoodsReceiptIssueCommand}"/>
+                                <Button Content="Stock Management"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToStockManagementCommand}"/>
+                                <Button Content="Stock Valuation"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToStockValuationCommand}"/>
+                                <Button Content="Reorder Alerts"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToReorderAlertsCommand}"/>
                             </StackPanel>
                         </Expander>
 
                         <!-- Accounting -->
-                        <Expander Header="Accounting" 
+                        <Expander Header="Accounting"
                                   Style="{StaticResource MaterialDesignExpander}"
                                   Margin="{StaticResource SmallMargin}">
                             <StackPanel Margin="20,0,0,0">
-                                <Button Content="Chart of Accounts" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Journal Entries" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Trial Balance" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Payables &amp; Receivables" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Chart of Accounts"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToChartOfAccountsCommand}"/>
+                                <Button Content="Journal Entries"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToJournalEntriesCommand}"/>
+                                <Button Content="Trial Balance"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToTrialBalanceCommand}"/>
+                                <Button Content="Payables &amp; Receivables"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToPayablesReceivablesCommand}"/>
                             </StackPanel>
                         </Expander>
 
@@ -165,10 +230,26 @@
                                   Style="{StaticResource MaterialDesignExpander}"
                                   Margin="{StaticResource SmallMargin}">
                             <StackPanel Margin="20,0,0,0">
-                                <Button Content="Employee Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Payslip Generator" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Leave Management" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Payroll Reports" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Employee Management"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToEmployeeManagementCommand}"/>
+                                <Button Content="Payslip Generator"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToPayslipGeneratorCommand}"/>
+                                <Button Content="Leave Management"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToLeaveManagementCommand}"/>
+                                <Button Content="Payroll Reports"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToPayrollReportsCommand}"/>
                             </StackPanel>
                         </Expander>
 
@@ -177,10 +258,26 @@
                                   Style="{StaticResource MaterialDesignExpander}"
                                   Margin="{StaticResource SmallMargin}">
                             <StackPanel Margin="20,0,0,0">
-                                <Button Content="Financial Reports" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Custom Reports" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Analytics Dashboard" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
-                                <Button Content="Audit Trail" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"/>
+                                <Button Content="Financial Reports"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToFinancialReportsCommand}"/>
+                                <Button Content="Custom Reports"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToCustomReportsCommand}"/>
+                                <Button Content="Analytics Dashboard"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToAnalyticsDashboardCommand}"/>
+                                <Button Content="Audit Trail"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding NavigateToAuditTrailCommand}"/>
                             </StackPanel>
                         </Expander>
 
@@ -190,17 +287,9 @@
 
             <!-- Content Area -->
             <Grid Grid.Column="1" Background="{StaticResource BackgroundBrush}">
-                <ContentControl x:Name="MainContentPresenter">
-                    <!-- Default Dashboard Content -->
-                    <Grid>
-                        <TextBlock Text="Welcome to INES-Ruhengeri ERP System"
-                                   FontSize="{StaticResource FontSizeXLarge}"
-                                   FontWeight="Bold"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Foreground="{StaticResource TextPrimaryBrush}"/>
-                    </Grid>
-                </ContentControl>
+                <Frame x:Name="MainContentFrame"
+                       NavigationUIVisibility="Hidden"
+                       Background="Transparent"/>
             </Grid>
         </Grid>
 

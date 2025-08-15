@@ -1,0 +1,34 @@
+﻿<Page x:Class="INES.ERP.WPF.Views.ProjectAccounts.ProjectExpensesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewModels="clr-namespace:INES.ERP.WPF.ViewModels.ProjectAccounts"
+      Title="Project Expenses">
+
+    <Page.DataContext>
+        <viewModels:ProjectExpensesViewModel/>
+    </Page.DataContext>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Border Style="{StaticResource StandardCardStyle}" Margin="{StaticResource LargePadding}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <materialDesign:PackIcon Kind="Receipt" 
+                                         Width="64" Height="64"
+                                         Foreground="{StaticResource PrimaryBrush}"
+                                         Margin="{StaticResource LargePadding}"/>
+                <TextBlock Text="Project Expenses"
+                           Style="{StaticResource HeadingTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="{StaticResource MediumMargin}"/>
+                <TextBlock Text="Manage project-related expenses"
+                           Style="{StaticResource BodyTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="{StaticResource SmallMargin}"/>
+                <TextBlock Text="This module is under development"
+                           Style="{StaticResource CaptionTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="{StaticResource MediumMargin}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

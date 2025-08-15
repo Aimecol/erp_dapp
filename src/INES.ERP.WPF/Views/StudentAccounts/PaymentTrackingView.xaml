@@ -1,0 +1,143 @@
+<Page x:Class="INES.ERP.WPF.Views.StudentAccounts.PaymentTrackingView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewModels="clr-namespace:INES.ERP.WPF.ViewModels.StudentAccounts"
+      Title="Payment Tracking">
+
+    <Page.DataContext>
+        <viewModels:PaymentTrackingViewModel/>
+    </Page.DataContext>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" 
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="{StaticResource LargePadding}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Payment Tracking"
+                               Style="{StaticResource HeadingTextStyle}"/>
+                    <TextBlock Text="Track and manage student payments"
+                               Style="{StaticResource CaptionTextStyle}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Command="{Binding RecordPaymentCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="{StaticResource SmallMargin}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus" Width="16" Height="16" Margin="0,0,8,0"/>
+                            <TextBlock Text="RECORD PAYMENT"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Command="{Binding RefreshCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Margin="{StaticResource SmallMargin}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Width="16" Height="16" Margin="0,0,8,0"/>
+                            <TextBlock Text="REFRESH"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Border Grid.Row="1" Style="{StaticResource StandardCardStyle}" Margin="{StaticResource MediumPadding}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Summary -->
+                <Border Grid.Row="0" Style="{StaticResource CompactCardStyle}" Margin="{StaticResource MediumMargin}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Total Payments" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding Payments.Count}" 
+                                       FontSize="{StaticResource FontSizeXLarge}"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryBrush}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Total Amount" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding TotalPayments, StringFormat='{}{0:C0}'}" 
+                                       FontSize="{StaticResource FontSizeXLarge}"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource SuccessBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Payments List -->
+                <DataGrid Grid.Row="1"
+                          ItemsSource="{Binding Payments}"
+                          SelectedItem="{Binding SelectedPayment}"
+                          Style="{StaticResource StandardDataGridStyle}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Student ID" Binding="{Binding StudentId}" Width="100"/>
+                        <DataGridTextColumn Header="Student Name" Binding="{Binding StudentName}" Width="200"/>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat='{}{0:C0}'}" Width="120"/>
+                        <DataGridTextColumn Header="Payment Date" Binding="{Binding PaymentDate, StringFormat='{}{0:yyyy-MM-dd}'}" Width="120"/>
+                        <DataGridTextColumn Header="Method" Binding="{Binding PaymentMethod}" Width="120"/>
+                        <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" Width="120"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                        <DataGridTemplateColumn Header="Actions" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding DataContext.ViewPaymentCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource MaterialDesignIconButton}"
+                                            ToolTip="View Details">
+                                        <materialDesign:PackIcon Kind="Eye" Width="16" Height="16"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- Loading Overlay -->
+        <Border Grid.Row="0" Grid.RowSpan="2"
+                Background="#80000000"
+                Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Width="50" Height="50"
+                             IsIndeterminate="True"
+                             Foreground="{StaticResource PrimaryBrush}"/>
+                <TextBlock Text="Loading payments..."
+                           Foreground="White"
+                           FontSize="{StaticResource FontSizeNormal}"
+                           Margin="{StaticResource MediumMargin}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

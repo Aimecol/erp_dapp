@@ -1,4 +1,6 @@
 using System.Windows;
+using INES.ERP.WPF.ViewModels;
+using INES.ERP.WPF.Services;
 
 namespace INES.ERP.WPF.Views;
 
@@ -7,8 +9,15 @@ namespace INES.ERP.WPF.Views;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow(MainWindowViewModel viewModel, NavigationService navigationService)
     {
         InitializeComponent();
+        DataContext = viewModel;
+
+        // Set up navigation frame
+        navigationService.SetMainFrame(MainContentFrame);
+
+        // Navigate to dashboard by default
+        _ = navigationService.NavigateToAsync("Dashboard");
     }
 }

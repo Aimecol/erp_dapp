@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace INES.ERP.WPF.Services;
 
@@ -9,8 +10,14 @@ namespace INES.ERP.WPF.Services;
 public class NavigationService
 {
     private readonly Dictionary<string, Type> _pages = new();
+    private readonly IServiceProvider _serviceProvider;
     private Frame? _mainFrame;
     private string? _currentView;
+
+    public NavigationService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
 
     /// <summary>
     /// Event raised when navigation occurs
@@ -54,15 +61,30 @@ public class NavigationService
     /// <returns>True if navigation was successful</returns>
     public async Task<bool> NavigateToAsync(string pageKey, object? parameter = null)
     {
+        System.Diagnostics.Debug.WriteLine($"NavigateToAsync called with pageKey: {pageKey}");
+
         if (_mainFrame == null)
+        {
+            System.Diagnostics.Debug.WriteLine("MainFrame is null!");
             return false;
+        }
 
         if (!_pages.TryGetValue(pageKey, out var pageType))
+        {
+            System.Diagnostics.Debug.WriteLine($"Page type not found for key: {pageKey}");
+            System.Diagnostics.Debug.WriteLine($"Available pages: {string.Join(", ", _pages.Keys)}");
             return false;
+        }
+
+        System.Diagnostics.Debug.WriteLine($"Found page type: {pageType.Name}");
 
         try
         {
-            var page = Activator.CreateInstance(pageType);
+            // Use service provider to create the page instance
+            System.Diagnostics.Debug.WriteLine($"Creating page instance for type: {pageType.Name}");
+            var page = _serviceProvider.GetRequiredService(pageType);
+            System.Diagnostics.Debug.WriteLine($"Page instance created: {page?.GetType().Name}");
+
             if (page is Page wpfPage)
             {
                 if (parameter != null && wpfPage.DataContext != null)
@@ -73,8 +95,10 @@ public class NavigationService
                 }
 
                 var previousView = _currentView;
+                System.Diagnostics.Debug.WriteLine($"Navigating to page: {wpfPage.GetType().Name}");
                 _mainFrame.Navigate(wpfPage);
                 _currentView = pageKey;
+                System.Diagnostics.Debug.WriteLine($"Navigation completed. Current view: {_currentView}");
 
                 // Raise navigation event
                 Navigated?.Invoke(this, new NavigationEventArgs
@@ -86,10 +110,15 @@ public class NavigationService
 
                 return true;
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Page is not a WPF Page: {page?.GetType().Name}");
+            }
         }
-        catch
+        catch (Exception ex)
         {
-            // Log error in real implementation
+            System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
         }
 
         return false;

@@ -201,8 +201,8 @@ public partial class LoginViewModel : BaseViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // Create and show main window
-                var mainWindow = new MainWindow();
+                // Get services from the application
+                var mainWindow = App.GetService<Views.MainWindow>();
                 mainWindow.Show();
 
                 // Close login window

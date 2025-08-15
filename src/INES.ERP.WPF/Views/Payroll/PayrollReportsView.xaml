@@ -1,0 +1,34 @@
+﻿<Page x:Class="INES.ERP.WPF.Views.Payroll.PayrollReportsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewModels="clr-namespace:INES.ERP.WPF.ViewModels.Payroll"
+      Title="Payroll Reports">
+
+    <Page.DataContext>
+        <viewModels:PayrollReportsViewModel/>
+    </Page.DataContext>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Border Style="{StaticResource StandardCardStyle}" Margin="{StaticResource LargePadding}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <materialDesign:PackIcon Kind="ChartBox" 
+                                         Width="64" Height="64"
+                                         Foreground="{StaticResource PrimaryBrush}"
+                                         Margin="{StaticResource LargePadding}"/>
+                <TextBlock Text="Payroll Reports"
+                           Style="{StaticResource HeadingTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="{StaticResource MediumMargin}"/>
+                <TextBlock Text="Generate payroll reports"
+                           Style="{StaticResource BodyTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="{StaticResource SmallMargin}"/>
+                <TextBlock Text="This module is under development"
+                           Style="{StaticResource CaptionTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="{StaticResource MediumMargin}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
